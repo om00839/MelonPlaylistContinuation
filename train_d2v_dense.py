@@ -1,28 +1,27 @@
 import os
 import sys
 import random
-import shutil
 
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import tensorflow.keras as K
 
-from dataset import MPCDataset
+from .dataset import MPCDataset
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-sys.path.append("/content/drive/My\ Drive/MelonPlaylistContinuation")
+sys.path.append("/content/drive/My Drive/MelonPlaylistContinuation")
 
 
 DATA_DIR = "/content/drive/My Drive/MelonPlaylistContinuation/data"
 INFO_DIR = "/content/drive/My Drive/MelonPlaylistContinuation/info"
-CKPT_DIR = "/content/drive/My Drive/MelonPlaylistContinuation/checkpoint/d2v_dense/"
+CKPT_DIR = "/content/drive/My Drive/MelonPlaylistContinuation/checkpoint/d2v_dense"
 if not os.path.isdir(CKPT_DIR):
     os.mkdir(CKPT_DIR)
 SEED = 200722
 dataset = MPCDataset(DATA_DIR, INFO_DIR, vector_size=256)
 
-generator = iter(dataset.get_generator('train', batch_size=1))
+generator = iter(dataset.generate_input('train', batch_size=1))
 song_plylst_vec_list = list()
 tag_plylst_vec_list = list()
 song_labels_list = list()
